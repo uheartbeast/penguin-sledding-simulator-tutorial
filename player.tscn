@@ -14,10 +14,11 @@ position = Vector2(0, -4)
 texture = ExtResource("1_crl0m")
 offset = Vector2(0, -8)
 hframes = 2
+frame = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_fa3l0")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-offset = Vector2(0, -16)
+offset = Vector2(64, -16)
