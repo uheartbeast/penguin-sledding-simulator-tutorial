@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://1sn4rb1gkyev"]
+[gd_scene load_steps=3 format=3 uid="uid://1sn4rb1gkyev"]
 
+[ext_resource type="Script" path="res://visible_collision_polygon_2d.gd" id="1_ibouv"]
 [ext_resource type="PackedScene" uid="uid://dr6bexbxl0i01" path="res://player.tscn" id="1_wxdcu"]
 
 [node name="Level" type="Node2D"]
@@ -8,6 +9,11 @@
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PackedVector2Array(0, 128, 64, 128, 96, 112, 128, 112, 128, 128, 256, 128, 256, 112, 352, 112, 384, 128, 512, 128, 544, 112, 832, 112, 832, 88, 896, 88, 896, 112, 896, 184, 0, 184)
+script = ExtResource("1_ibouv")
+
+[node name="VisibleCollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(960, 88, 1152, 88, 1192, 104, 1344, 104, 1344, 192, 960, 192)
+script = ExtResource("1_ibouv")
 
 [node name="Player" parent="." instance=ExtResource("1_wxdcu")]
 position = Vector2(16, 128)
