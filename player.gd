@@ -20,6 +20,8 @@ var finish_x: = -1
 @onready var anchor: Node2D = $Anchor
 @onready var sprite_2d: Sprite2D = $Anchor/Sprite2D
 
+signal level_finished()
+
 func _physics_process(delta: float) -> void:
 	coyote_time += delta
 	
@@ -46,7 +48,6 @@ func _physics_process(delta: float) -> void:
 			air_jump = false
 			var tween = create_tween()
 			tween.tween_property(sprite_2d, "rotation_degrees", 0, 0.4).from(360 + sprite_2d.rotation_degrees)
-			tween.play()
 		
 		if Input.is_action_just_released("ui_up"):
 			velocity.y = unjump_force
@@ -75,4 +76,4 @@ func _physics_process(delta: float) -> void:
 
 func check_for_finish_line() -> void:
 	if global_position.x > finish_x and finish_x != -1:
-		set_deferred("process_mode", PROCESS_MODE_DISABLED)
+		level_finished.emit()

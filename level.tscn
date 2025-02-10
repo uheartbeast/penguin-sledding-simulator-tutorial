@@ -1,9 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://1sn4rb1gkyev"]
+[gd_scene load_steps=7 format=3 uid="uid://1sn4rb1gkyev"]
 
 [ext_resource type="Script" path="res://visible_collision_polygon_2d.gd" id="1_ibouv"]
 [ext_resource type="Script" path="res://level.gd" id="1_lfggx"]
 [ext_resource type="PackedScene" uid="uid://dr6bexbxl0i01" path="res://player.tscn" id="1_wxdcu"]
 [ext_resource type="PackedScene" uid="uid://dxdkdao1ii2pi" path="res://finish_line.tscn" id="3_gsvmf"]
+[ext_resource type="FontFile" uid="uid://yeqt407l6qh7" path="res://fonts/nes_cyrillic.ttf" id="5_mkiwt"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_xoaqf"]
+font = ExtResource("5_mkiwt")
+font_color = Color(0, 0, 0, 1)
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_lfggx")
@@ -27,3 +32,18 @@ offset_top = -88.0
 offset_right = 1408.0
 offset_bottom = 296.0
 player = NodePath("../Player")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TimerLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "0.6"
+label_settings = SubResource("LabelSettings_xoaqf")
