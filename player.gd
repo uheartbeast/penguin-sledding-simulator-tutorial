@@ -1,4 +1,4 @@
-extends CharacterBody2D
+class_name Player extends CharacterBody2D
 
 @export var acceleration: = 150
 @export var max_speed: = 290
@@ -15,12 +15,15 @@ extends CharacterBody2D
 var target_tilt: = 0.0
 var air_jump: = true
 var coyote_time: = 0.0
+var finish_x: = -1
 
 @onready var anchor: Node2D = $Anchor
 @onready var sprite_2d: Sprite2D = $Anchor/Sprite2D
 
 func _physics_process(delta: float) -> void:
 	coyote_time += delta
+	
+	check_for_finish_line()
 	
 	if is_on_floor() or coyote_time <= coyote_time_amount:
 		air_jump = true
@@ -69,3 +72,7 @@ func _physics_process(delta: float) -> void:
 	
 	sprite_2d.rotation_degrees = lerp(sprite_2d.rotation_degrees, target_tilt, 0.2)
 	anchor.scale = anchor.scale.lerp(Vector2.ONE, 0.05)
+
+func check_for_finish_line() -> void:
+	if global_position.x > finish_x and finish_x != -1:
+		set_deferred("process_mode", PROCESS_MODE_DISABLED)
