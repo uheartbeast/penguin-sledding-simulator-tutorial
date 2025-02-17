@@ -11,6 +11,8 @@ class_name Player extends CharacterBody2D
 @export var landing_acceleration: = 2250.0
 @export var air_jump_speed_reduction: = 1500
 @export var coyote_time_amount: = 0.15
+@export var min_zoom_amount: = 0.9
+@export var max_zoom_amount: = 1.5
 
 var target_tilt: = 0.0
 var air_jump: = true
@@ -19,8 +21,13 @@ var finish_x: = -1
 
 @onready var anchor: Node2D = $Anchor
 @onready var sprite_2d: Sprite2D = $Anchor/Sprite2D
+@onready var camera_2d: Camera2D = $Camera2D
+@onready var ray_cast_2d: RayCast2D = $RayCast2D
 
 signal level_finished()
+
+func _ready() -> void:
+	camera_2d.zoom = Vector2(max_zoom_amount, max_zoom_amount)
 
 func _physics_process(delta: float) -> void:
 	coyote_time += delta
@@ -73,6 +80,16 @@ func _physics_process(delta: float) -> void:
 	
 	sprite_2d.rotation_degrees = lerp(sprite_2d.rotation_degrees, target_tilt, 0.2)
 	anchor.scale = anchor.scale.lerp(Vector2.ONE, 0.05)
+	
+	var y_offset_target: float = clamp(ray_cast_2d.get_collision_point().y - global_position.y, -16, 128)
+	camera_2d.offset.y = lerp(camera_2d.offset.y, y_offset_target, 0.02)
+	
+	var x_offset_target: float = clamp(velocity.x, 64, 128)
+	camera_2d.offset.x = lerp(camera_2d.offset.x, x_offset_target, 0.02)
+	
+	var zoom_target_amount: float = clamp(max_zoom_amount - (velocity.x / 150), min_zoom_amount, max_zoom_amount)
+	var zoom_target: = Vector2(zoom_target_amount, zoom_target_amount)
+	camera_2d.zoom = camera_2d.zoom.lerp(zoom_target, 0.02)
 
 func check_for_finish_line() -> void:
 	if global_position.x > finish_x and finish_x != -1:

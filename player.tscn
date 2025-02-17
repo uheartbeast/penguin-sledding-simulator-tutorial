@@ -7,6 +7,7 @@
 floor_constant_speed = true
 floor_snap_length = 8.0
 script = ExtResource("1_h4t73")
+min_zoom_amount = 0.8
 
 [node name="Anchor" type="Node2D" parent="."]
 
@@ -19,6 +20,10 @@ frame = 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(64, -16)
+zoom = Vector2(1.5, 1.5)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-8, 0, -8, -6, -3, -9, 8, -9, 8, -7)
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 300)
