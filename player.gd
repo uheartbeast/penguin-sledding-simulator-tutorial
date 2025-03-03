@@ -23,6 +23,7 @@ var finish_x: = -1
 @onready var sprite_2d: Sprite2D = $Anchor/Sprite2D
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var ray_cast_2d: RayCast2D = $RayCast2D
+@onready var gpu_particles_2d: GPUParticles2D = $GPUParticles2D
 
 signal level_finished()
 
@@ -35,6 +36,7 @@ func _physics_process(delta: float) -> void:
 	check_for_finish_line()
 	
 	if is_on_floor() or coyote_time <= coyote_time_amount:
+		gpu_particles_2d.emitting = true
 		air_jump = true
 		target_tilt = 0
 		if velocity.x <= max_speed:
@@ -45,6 +47,7 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_just_pressed("ui_up"):
 			velocity.y = -jump_force
 	else:
+		gpu_particles_2d.emitting = false
 		target_tilt = clamp(velocity.y / 4, -30, 30)
 		
 		velocity.x = move_toward(velocity.x, 0, air_friction * delta)
@@ -94,3 +97,4 @@ func _physics_process(delta: float) -> void:
 func check_for_finish_line() -> void:
 	if global_position.x > finish_x and finish_x != -1:
 		level_finished.emit()
+		gpu_particles_2d.set_deferred("emitting", false)
